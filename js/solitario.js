@@ -36,27 +36,9 @@ let cont_receptor4 = document.getElementById("cont_receptor4");
 let cont_movimientos = document.getElementById("cont_movimientos");
 
 // Tiempo
-let tiempoRef = Date.now();
-let cronometo = true;
-let acumulado = 0;
-
-setInterval(() => {
-	let tiempo = document.getElementById("contador_tiempo")
-	if (cronometo) {
-		acumulado = Date.now() - tiempoRef
-	}
-	tiempo.innerHTML = formatearMS(acumulado)
-}, 1000 / 60);
-
-function formatearMS(tiempo_ms) {
-	let s = Math.floor((tiempo_ms / 1000) % 60)
-	let m = Math.floor((s / 60) % 60)
-	let h = Math.floor((m / 60))
-	Number.prototype.ceros = function (n,) {
-		return (this + "").padStart(n, "0")
-	}
-	return h.ceros(2) + ":" + m.ceros(2) + ":" + s.ceros(2)
-}
+let cont_tiempo = document.getElementById("cont_tiempo"); // span cuenta tiempo
+let segundos = 0;    // cuenta de segundos
+let temporizador = null; // manejador del temporizador
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
@@ -78,6 +60,20 @@ function comenzar_juego() {
 	*/
 
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+
+	//crerar baraja
+	for (let i = 0; i < palos.length; i++) {
+		for (let j = 0; j < numeros.length; j++) {
+			let carta = document.createElement("img");
+			carta.src = "imagenes/" + numeros[j] + "-" + palos[i] + ".png";
+			carta.alt = numeros[j] + palos[i];
+			carta.onclick = function () {
+				mover_carta(this);
+			}
+			mazo_inicial.push(carta);
+		}
+	}
+
 
 
 	// Barajar
@@ -161,6 +157,14 @@ function arrancar_tiempo() {
 */
 function barajar(mazo) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+	let i, j, aux;
+	for (i = 0; i < mazo.length; i++) {
+		j = Math.floor(Math.random() * mazo.length);
+		aux = mazo[i];
+		mazo[i] = mazo[j];
+		mazo[j] = aux;
+	}
+
 } // barajar
 
 
@@ -174,7 +178,40 @@ function barajar(mazo) {
 */
 function cargar_tapete_inicial(mazo) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+	let ancho = 100;
+	let alto = 150;
+	let margen = 10;
+	let top = 0;
+	let left = 0;
+	let fila = 0;
+	let columna = 0;
+	let max_columnas = Math.trunc(tapete_inicial.offsetWidth / (ancho + margen));
+	let max_filas = Math.trunc(tapete_inicial.offsetHeight / (alto + margen));
+	for (let i = 0; i < mazo.length; i++) {
+		mazo[i].style.width = ancho + "px";
+		mazo[i].style.height = alto + "px";
+		mazo[i].style.position = "absolute";
+		mazo[i].style.top = top + "px";
+		mazo[i].style.left = left + "px";
+		mazo[i].style.zIndex = 0;
+		mazo[i].setAttribute("data-fila", fila);
+		mazo[i].setAttribute("data-columna", columna);
+		mazo[i].setAttribute("data-estado", "tapete_inicial");
+		tapete_inicial.appendChild(mazo[i]);
+		columna++;
+		if (columna >= max_columnas) {
+			columna = 0;
+			fila++;
+			top += alto + margen;
+			left = 0;
+		} else {
+			left += ancho + margen;
+		}
+	}
+	set_contador(cont_cartas, mazo.length);
+
 } // cargar_tapete_inicial
+
 
 
 /**
@@ -190,6 +227,7 @@ function inc_contador(contador) {
 */
 function dec_contador(contador) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! ***/
+	contador.innerHTML = +contador.innerHTML - 1;
 } // dec_contador
 
 /**
@@ -198,4 +236,6 @@ function dec_contador(contador) {
 */
 function set_contador(contador, valor) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+	contador.innerHTML = valor;
+
 } // set_contador
