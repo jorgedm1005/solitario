@@ -3,9 +3,9 @@
 // Array de palos
 let palos = ["ova", "cua", "hex", "cir"];
 // Array de número de cartas
-//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [9, 10, 11, 12];
+//let numeros = [9, 10, 11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -48,6 +48,9 @@ document.getElementById("reset").onclick = comenzar_juego;
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 /*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+comenzar_juego();
+
+
 
 // Desarrollo del comienzo de juego
 function comenzar_juego() {
@@ -62,14 +65,13 @@ function comenzar_juego() {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
 
 	//crerar baraja
-	for (let i = 0; i < palos.length; i++) {
-		for (let j = 0; j < numeros.length; j++) {
+	for (let i = 0; i < numeros.length; i++) {
+		for (let j = 0; j < palos.length; j++) {
 			let carta = document.createElement("img");
-			carta.src = "imagenes/" + numeros[j] + "-" + palos[i] + ".png";
+			carta.src = "imagenes/" + "baraja" + numeros[i] + "-" + palos[j] + ".png";
 			carta.alt = numeros[j] + palos[i];
-			carta.onclick = function () {
-				mover_carta(this);
-			}
+			carta.style.top = 0;
+			carta.style.left = 0;
 			mazo_inicial.push(carta);
 		}
 	}
@@ -120,6 +122,7 @@ function comenzar_juego() {
 	a clearInterval en su caso.   
 */
 
+
 function arrancar_tiempo() {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
 	if (temporizador) clearInterval(temporizador);
@@ -140,6 +143,8 @@ function arrancar_tiempo() {
 } // arrancar_tiempo
 
 
+
+
 /**
 	Si mazo es un array de elementos <img>, en esta rutina debe ser
 	reordenado aleatoriamente. Al ser un array un objeto, se pasa
@@ -157,12 +162,12 @@ function arrancar_tiempo() {
 */
 function barajar(mazo) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
-	let i, j, aux;
+	let i, j, carta;
 	for (i = 0; i < mazo.length; i++) {
 		j = Math.floor(Math.random() * mazo.length);
-		aux = mazo[i];
+		carta = mazo[i];
 		mazo[i] = mazo[j];
-		mazo[j] = aux;
+		mazo[j] = carta;
 	}
 
 } // barajar
@@ -176,39 +181,20 @@ function barajar(mazo) {
 	coordenadas top y left, algun atributo de tipo data-...
 	Al final se debe ajustar el contador de cartas a la cantidad oportuna
 */
-function cargar_tapete_inicial(mazo) {
+
+function cargar_tapete_inicial(mazo_inicial) {
 	/*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
-	let ancho = 100;
-	let alto = 150;
-	let margen = 10;
-	let top = 0;
-	let left = 0;
-	let fila = 0;
-	let columna = 0;
-	let max_columnas = Math.trunc(tapete_inicial.offsetWidth / (ancho + margen));
-	let max_filas = Math.trunc(tapete_inicial.offsetHeight / (alto + margen));
-	for (let i = 0; i < mazo.length; i++) {
-		mazo[i].style.width = ancho + "px";
-		mazo[i].style.height = alto + "px";
-		mazo[i].style.position = "absolute";
-		mazo[i].style.top = top + "px";
-		mazo[i].style.left = left + "px";
-		mazo[i].style.zIndex = 0;
-		mazo[i].setAttribute("data-fila", fila);
-		mazo[i].setAttribute("data-columna", columna);
-		mazo[i].setAttribute("data-estado", "tapete_inicial");
-		tapete_inicial.appendChild(mazo[i]);
-		columna++;
-		if (columna >= max_columnas) {
-			columna = 0;
-			fila++;
-			top += alto + margen;
-			left = 0;
-		} else {
-			left += ancho + margen;
-		}
+	let i, carta;
+	for (i = 0; i < mazo_inicial.length; i++) {
+		carta = mazo_inicial[i];
+		carta.style.width = "100px";
+		carta.style.position = "absolute";
+		carta.style.top = "0px";
+		carta.style.left = (i * 100) + "px";
+		tapete_inicial.appendChild(carta);
 	}
-	set_contador(cont_cartas, mazo.length);
+	set_contador(cont_cartas, mazo_inicial.length);
+
 
 } // cargar_tapete_inicial
 
