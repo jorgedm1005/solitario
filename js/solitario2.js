@@ -121,6 +121,7 @@ function cargar_tapete_inicial(cartas) {
     carta.style.top = paso + "px";
     carta.style.left = paso + 3 + "px";
     carta.style.width = "60px";
+    carta.draggable = false;
     tapete_inicial.appendChild(carta);
     paso += 5;
     console.log(carta);
