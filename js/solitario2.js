@@ -125,6 +125,12 @@ function cargar_tapete_inicial(cartas) {
     tapete_inicial.appendChild(carta);
     paso += 5;
     console.log(carta);
+    if (i + 1 == cartas.length) {
+      carta.setAttribute('draggable', 'true')
+    } else {
+      carta.setAttribute('draggable', 'false')
+    }
+
   }
 } // cargar_tapete_inicial
 
@@ -138,7 +144,6 @@ function barajar(mazo) {
     mazo[i] = mazo[j];
     mazo[j] = carta;
   }
-
 } // barajar
 
 function arrancar_tiempo() {
@@ -178,3 +183,20 @@ function set_contador(contador, valor) {
 
 
 } // set_contador
+
+function actualizar_baraja() {
+  /*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
+  //actualizar baraja
+  let cartas = document.querySelectorAll("#inicial img");
+  for (let i = 0; i < cartas.length; i++) {
+    if (i + 1 == cartas.length) {
+      cartas[i].setAttribute('draggable', 'true')
+    } else {
+      cartas[i].setAttribute('draggable', 'false')
+    }
+
+  }
+  console.log(cartas)
+} // actualizar_baraja
+
+actualizar_baraja();
