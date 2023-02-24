@@ -108,18 +108,30 @@ function comenzar_juego() {
   Al final se debe ajustar el contador de cartas a la cantidad oportuna
 */
 
+
 function cargar_tapete_inicial(cartas) {
   /*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
-  //cargar tapete inicial
+  //cargar tapete inicia
+  let paso = 5;
   for (let i = 0; i < cartas.length; i++) {
     let carta = document.createElement("img");
     let numcarta = cartas[i].split("-")[0]; // numero de la carta
     carta.src = "imagenes/baraja/" + cartas[i] + ".png";
-    if (cartas[i].includes("cir") || cartas[i].includes("hex")) { // dar clases a las cartas
-      carta.setAttribute('color', 'negro')// si la carta es cir o hex ponerle negro
-    } else {
-      carta.setAttribute('color', 'rojo')// si la carta es cua o ova ponerle rojo
+    if (cartas[i].includes("cir")) { // dar clases a las cartas
+      carta.setAttribute('color', 'cir')
+      carta.setAttribute('colores', 'negro')
+    } else if (cartas[i].includes("hex")) {
+      carta.setAttribute('color', 'hex')
+      carta.setAttribute('colores', 'negro')
+    } else if (cartas[i].includes("cua")) {
+      carta.setAttribute('color', 'cua')
+      carta.setAttribute('colores', 'rojo')
+    } else if (cartas[i].includes("ova")) {
+      carta.setAttribute('color', 'ova')
+      carta.setAttribute('colores', 'rojo')
     }
+
+
     carta.setAttribute('numero', numcarta);
     carta.style.position = "absolute";
     carta.style.top = paso + "px";
@@ -139,15 +151,7 @@ function cargar_tapete_inicial(cartas) {
   }
 } // cargar_tapete_inicial
 
-function cargar_mazo(mazo) {
-  // cargar el mazo sobrantes en el tapete inicial
-  for (let i = 0; i < mazo.length; i++) {
 
-    let carta = document.firstChild(mazo[i]);
-    console.log(carta)
-    tapete_inicial.appendChild(carta);
-  }
-}
 
 
 
@@ -235,6 +239,7 @@ function actualizar_sobrante() {
 
 actualizar_inicial();
 actualizar_sobrante();
+
 
 //funcion para declarar el inicio del drag
 
@@ -350,7 +355,7 @@ function drop(event) {
 
   var data = event.dataTransfer.getData("text");
 
-  if (event.target.id == "receptor1" && tap) { //conreolo el tapete y si viene del inicial
+  if (event.target.id == "receptor1" && tap && mazo_inicial.length > 0) { //conreolo el tapete y si viene del inicial
 
     mazo_receptor1.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
@@ -359,7 +364,7 @@ function drop(event) {
     tapete_receptor1.lastChild.style.top = "20%";
     tapete_receptor1.lastChild.style.left = "20%";
     actualizar_inicial();
-  } else if (event.target.id == "receptor2" && tap) {
+  } else if (event.target.id == "receptor2" && tap && mazo_inicial.length > 0) {
 
     mazo_receptor2.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
@@ -368,7 +373,7 @@ function drop(event) {
     tapete_receptor2.lastChild.style.top = "20%";
     tapete_receptor2.lastChild.style.left = "20%";
     actualizar_inicial();
-  } else if (event.target.id == "receptor3" && tap) {
+  } else if (event.target.id == "receptor3" && tap && mazo_inicial.length > 0) {
 
     mazo_receptor3.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
@@ -377,7 +382,7 @@ function drop(event) {
     tapete_receptor3.lastChild.style.top = "20%";
     tapete_receptor3.lastChild.style.left = "20%";
     actualizar_inicial();
-  } else if (event.target.id == "receptor4" && tap) {
+  } else if (event.target.id == "receptor4" && tap && mazo_inicial.length > 0) {
 
     mazo_receptor4.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
@@ -386,7 +391,7 @@ function drop(event) {
     tapete_receptor4.lastChild.style.top = "20%";
     tapete_receptor4.lastChild.style.left = "20%";
     actualizar_inicial();
-  } else if (event.target.id == "sobrantes" && tap) {
+  } else if (event.target.id == "sobrantes" && tap && mazo_inicial.length > 0) {
 
     mazo_sobrantes.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
@@ -399,7 +404,7 @@ function drop(event) {
     actualizar_sobrante();
 
 
-  } else if (event.target.id == "receptor1" && !tap) {  //conreolo el tapete y si viene del sobrantes
+  } else if (event.target.id == "receptor1" && !tap && mazo_sobrantes.length) {  //conreolo el tapete y si viene del sobrantes
     actualizar_sobrante();
     mazo_receptor1.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
@@ -409,7 +414,7 @@ function drop(event) {
     tapete_receptor1.lastChild.style.top = "20%";
     tapete_receptor1.lastChild.style.left = "20%";
     actualizar_sobrante();
-  } else if (event.target.id == "receptor2" && !tap) {
+  } else if (event.target.id == "receptor2" && !tap && mazo_sobrantes.length) {
 
     mazo_receptor2.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
@@ -418,7 +423,7 @@ function drop(event) {
     tapete_receptor2.lastChild.style.top = "20%";
     tapete_receptor2.lastChild.style.left = "20%";
     actualizar_sobrante();
-  } else if (event.target.id == "receptor3" && !tap) {
+  } else if (event.target.id == "receptor3" && !tap && mazo_sobrantes.length) {
 
     mazo_receptor3.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
@@ -427,7 +432,7 @@ function drop(event) {
     tapete_receptor3.lastChild.style.top = "20%";
     tapete_receptor3.lastChild.style.left = "20%";
     actualizar_sobrante();
-  } else if (event.target.id == "receptor4" && !tap) {
+  } else if (event.target.id == "receptor4" && !tap && mazo_sobrantes.length) {
 
     mazo_receptor4.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
@@ -438,21 +443,33 @@ function drop(event) {
     actualizar_sobrante();
   }
 
+  vaciar_sobrantes(tapete_sobrantes)
 
 
-}
-console.log(tapete_inicial.length)
+  function vaciar_sobrantes(tapete_sobrantes) {
 
-if (tapete_inicial.length == 1) {
-  barajar(mazo_sobrantes);
-  cargar_mazo(mazo_sobrantes);
-  vaciar_sobrantes(tapete_sobrantes);
-}
+    if (mazo_inicial.length == 0) { // Condicional que activa la función cuando el mazo inicial se acaba.
+      var sobrantes = tapete_sobrantes.getElementsByTagName("img"); // Obtengo las cartas del tapete de sobrantes.
 
-function vaciar_sobrantes(tapete_sobrantes) {
+      for (i = 0; i < sobrantes.length; i++) { // Bucle que recorre los sobrantes, obtiene su número y su palo y los vuelve a añadir a mazo_inicial.
+        var num = sobrantes[i].getAttribute("numero");
+        var palo = sobrantes[i].getAttribute("color");
 
-  while (mazo_sobrantes.length > 0) {
-    tapete_sobrantes.removeChild(tapete_sobrantes.lastChild);
-    mazo_sobrantes.pop();
+        mazo_inicial.push(num + "-" + palo); // Incluye la carta al mazo inicial de nuevo.
+      }
+
+      setTimeout(function () {
+        while (sobrantes.length > 0) tapete_sobrantes.removeChild(sobrantes[0]); // Bucle que elimina las cartas del anterior tapete (sobrantes).
+      }, 100);
+
+
+      barajar(mazo_inicial); // Baraja el mazo inicial.
+      cargar_tapete_inicial(mazo_inicial); // Carga el mazo inicial en el tapete inicial.
+      actualizar_inicial();
+
+
+
+
+    }
   }
 }
