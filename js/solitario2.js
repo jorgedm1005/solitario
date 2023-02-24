@@ -46,7 +46,7 @@ let tap = true; // variable para saber tapete de origen
 
 
 // Rutina asociada a boton reset: comenzar_juego
-/*document.getElementById("reset").onclick = comenzar_juego;*/
+document.getElementById("reset").onclick = comenzar_juego;
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 /*** !!!!!!!!!!!!!!!!!!! CÓDIGO !!!!!!!!!!!!!!!!!!!! **/
@@ -56,6 +56,49 @@ comenzar_juego();
 
 // Desarrollo del comienzo de juego
 function comenzar_juego() {
+
+  // vaciar todos los tapetes
+  mazo_inicial = [];
+
+  //creo variables para las cartas de cada tapete
+
+  var cartasIniciales = tapete_inicial.getElementsByTagName("img");
+  var cartasSobrantes = tapete_sobrantes.getElementsByTagName("img");
+  var cartasReceptorUno = tapete_receptor1.getElementsByTagName("img");
+  var cartasReceptorDos = tapete_receptor2.getElementsByTagName("img");
+  var cartasReceptorTres = tapete_receptor3.getElementsByTagName("img");
+  var cartasReceptorCuatro = tapete_receptor4.getElementsByTagName("img");
+
+
+  //vaciar todos los tapetes
+  while (cartasIniciales.length > 0) {
+    tapete_inicial.removeChild(cartasIniciales[0]);
+  }
+
+  while (cartasSobrantes.length > 0) {
+    tapete_sobrantes.removeChild(cartasSobrantes[0]);
+  }
+
+  while (cartasReceptorUno.length > 0) {
+    tapete_receptor1.removeChild(cartasReceptorUno[0]);
+  }
+
+  while (cartasReceptorDos.length > 0) {
+    tapete_receptor2.removeChild(cartasReceptorDos[0]);
+  }
+
+  while (cartasReceptorTres.length > 0) {
+    tapete_receptor3.removeChild(cartasReceptorTres[0]);
+  }
+
+  while (cartasReceptorCuatro.length > 0) {
+    tapete_receptor4.removeChild(cartasReceptorCuatro[0]);
+  }
+
+  actualizar_inicial();
+  actualizar_sobrante();
+
+
   /* Crear baraja, es decir crear el mazo_inicial. Este será un array cuyos 
   elementos serán elementos HTML <img>, siendo cada uno de ellos una carta.
   Sugerencia: en dos bucles for, bárranse los "palos" y los "números", formando
