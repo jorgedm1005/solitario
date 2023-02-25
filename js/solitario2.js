@@ -140,7 +140,7 @@ function comenzar_juego() {
   /*
     // Arrancar el conteo de tiempo
     arrancar_tiempo();*/
-
+  actualizar_inicial();
 } // comenzar_juego
 
 /**
