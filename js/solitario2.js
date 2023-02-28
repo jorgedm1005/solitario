@@ -3,8 +3,9 @@
 // Array de palos
 let palos = ["ova", "cua", "hex", "cir"];
 // Array de número de cartas
-//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; modo largo
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
+
 let numeros = [9, 10, 11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
@@ -298,7 +299,7 @@ function dragStart(event) {
 
 //let p = ["ova", "cua", "hex", "cir"];
 
-console.log(mazo_inicial[mazo_inicial.length - 1] );
+console.log(mazo_inicial[mazo_inicial.length - 1]);
 
 function allowDrop(event) {
 
@@ -326,7 +327,7 @@ function allowDrop(event) {
 
     }
   } else if (event.target.id == "receptor1" && mazo_receptor1.length > 0 && tap && cartaroja(mazo_inicial) != cartaroja(mazo_receptor1)) {//comprobamos si el tapete no esta vacio y si viene del inicial y si el color es distinto
-    if (mazo_inicial[mazo_inicial.length - 1].split("-")[0] == mazo_receptor1[mazo_receptor1.length - 1].split("-")[0] - 1 ) { //comprobamos si la carta es menor q la del tapete y el color es distino
+    if (mazo_inicial[mazo_inicial.length - 1].split("-")[0] == mazo_receptor1[mazo_receptor1.length - 1].split("-")[0] - 1) { //comprobamos si la carta es menor q la del tapete y el color es distino
       event.preventDefault();
 
     }
@@ -335,7 +336,7 @@ function allowDrop(event) {
       event.preventDefault();
 
     }
-  } else if (event.target.id == "receptor3" && mazo_receptor3.length > 0 && tap  && cartaroja(mazo_inicial) != cartaroja(mazo_receptor3)) {
+  } else if (event.target.id == "receptor3" && mazo_receptor3.length > 0 && tap && cartaroja(mazo_inicial) != cartaroja(mazo_receptor3)) {
     if (mazo_inicial[mazo_inicial.length - 1].split("-")[0] == mazo_receptor3[mazo_receptor3.length - 1].split("-")[0] - 1) {
       event.preventDefault();
 
@@ -380,7 +381,7 @@ function allowDrop(event) {
       event.preventDefault();
 
     }
-  } else if (event.target.id == "receptor4" && mazo_receptor4.length > 0 && !tap  && cartaroja(mazo_sobrantes) != cartaroja(mazo_receptor4)) {
+  } else if (event.target.id == "receptor4" && mazo_receptor4.length > 0 && !tap && cartaroja(mazo_sobrantes) != cartaroja(mazo_receptor4)) {
     if (mazo_sobrantes[mazo_sobrantes.length - 1].split("-")[0] == mazo_receptor4[mazo_receptor4.length - 1].split("-")[0] - 1) {
       event.preventDefault();
 
@@ -393,7 +394,7 @@ function allowDrop(event) {
 
   console.log(mazo_inicial[mazo_inicial.length - 1].split("-")[0]);
 
-  function cartaroja(mazo){ //hacemos una funcion para que si la carta es roja devuelva true y si no false
+  function cartaroja(mazo) { //hacemos una funcion para que si la carta es roja devuelva true y si no false
     if (mazo[mazo.length - 1].split("-")[1] == "ova" || mazo[mazo.length - 1].split("-")[1] == "cua") {
       return true;
     } else {
@@ -402,6 +403,9 @@ function allowDrop(event) {
   }
 
 }
+
+
+var auxZIndex = 0; //variable para el 
 
 function drop(event) {
   event.preventDefault();
@@ -412,6 +416,9 @@ function drop(event) {
 
     mazo_receptor1.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
+
+    document.getElementById(data).style.zIndex = auxZIndex; //ponemos el zindex a cada carta
+    auxZIndex += 1; //aumentamos el zindex para que la siguiente carta sea mas alta
 
     tapete_receptor1.appendChild(document.getElementById(data));
     tapete_receptor1.lastChild.style.top = "20%";
@@ -424,6 +431,9 @@ function drop(event) {
     mazo_receptor2.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
+
     tapete_receptor2.appendChild(document.getElementById(data));
     tapete_receptor2.lastChild.style.top = "20%";
     tapete_receptor2.lastChild.style.left = "20%";
@@ -435,16 +445,22 @@ function drop(event) {
     mazo_receptor3.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
+
     tapete_receptor3.appendChild(document.getElementById(data));
     tapete_receptor3.lastChild.style.top = "20%";
     tapete_receptor3.lastChild.style.left = "20%";
     actualizar_inicial();
     inc_contador(cont_movimientos);
     actualizar_contadores();
-    } else if (event.target.id == "receptor4" && tap && mazo_inicial.length > 0) {
+  } else if (event.target.id == "receptor4" && tap && mazo_inicial.length > 0) {
 
     mazo_receptor4.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
+
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
 
     tapete_receptor4.appendChild(document.getElementById(data));
     tapete_receptor4.lastChild.style.top = "20%";
@@ -456,6 +472,9 @@ function drop(event) {
 
     mazo_sobrantes.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
+
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
 
     tapete_sobrantes.appendChild(document.getElementById(data));
     tapete_sobrantes.lastChild.style.top = "20%";
@@ -470,6 +489,9 @@ function drop(event) {
     mazo_receptor1.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
+
     tapete_receptor1.appendChild(document.getElementById(data));
     console.log(data);
     tapete_receptor1.lastChild.style.top = "20%";
@@ -482,6 +504,9 @@ function drop(event) {
     mazo_receptor2.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
+
     tapete_receptor2.appendChild(document.getElementById(data));
     tapete_receptor2.lastChild.style.top = "20%";
     tapete_receptor2.lastChild.style.left = "20%";
@@ -492,6 +517,9 @@ function drop(event) {
 
     mazo_receptor3.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
+
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
 
     tapete_receptor3.appendChild(document.getElementById(data));
     tapete_receptor3.lastChild.style.top = "20%";
@@ -504,12 +532,16 @@ function drop(event) {
     mazo_receptor4.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
+    document.getElementById(data).style.zIndex = auxZIndex;
+    auxZIndex += 1;
+
     tapete_receptor4.appendChild(document.getElementById(data));
     tapete_receptor4.lastChild.style.top = "20%";
     tapete_receptor4.lastChild.style.left = "20%";
     actualizar_sobrante();
     inc_contador(cont_movimientos);
     actualizar_contadores();
+
   }
 
   vaciar_sobrantes(tapete_sobrantes)
@@ -540,7 +572,7 @@ function drop(event) {
     }
   }
 
-  function actualizar_contadores(){
+  function actualizar_contadores() {
     cont_inicial.innerHTML = mazo_inicial.length;
     cont_sobrantes.innerHTML = mazo_sobrantes.length;
     cont_receptor1.innerHTML = mazo_receptor1.length;
@@ -549,4 +581,26 @@ function drop(event) {
     cont_receptor4.innerHTML = mazo_receptor4.length;
 
   }
+  comprobarfinjuegocorto(); //comprueba si se ha ganado el juego en el modo corto
+  //comprobarfinjuegolargo(); comprueba si se ha ganado el juego en el modo largo, descomentar si se quiere jugar en modo largo
+}
+
+function comprobarfinjuegocorto() {
+  if (mazo_inicial.length == 0 && mazo_sobrantes.length == 0 && mazo_receptor1.length == 4 && mazo_receptor2.length == 4 && mazo_receptor3.length == 4 && mazo_receptor4.length == 4) {
+    setTimeout(function () {
+      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos");
+      comenzar_juego();
+    }, 100);
+  }
+
+}
+
+function comprobarfinjuegolargo() {
+  if (mazo_inicial.length == 0 && mazo_sobrantes.length == 0 && mazo_receptor1.length == 12 && mazo_receptor2.length == 12 && mazo_receptor3.length == 12 && mazo_receptor4.length == 12) {
+    setTimeout(function () {
+      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos");
+      comenzar_juego();
+    }, 100);
+  }
+
 }

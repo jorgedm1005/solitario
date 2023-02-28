@@ -9,6 +9,12 @@
 /* Todos los contadores estarán ubicados en la parte inferior 
    derecha (position absolute) de los respectivos tapetes (position relative).
 */
+#botones {
+	position: absolute;
+	top: 250px;
+	left: 30px;
+}
+
 .contador {
 	position: absolute;
 	bottom: 0px;
@@ -70,4 +76,26 @@ div.tapete#sobrantes {
 /* Color de fondo de los tapetes receptores */
 div.tapete.receptor {
 	background-color: lightgreen;
+}
+
+/*Boton de reinicio*/
+#reset {
+	margin-left: 46%;
+}
+
+/* Estilo para la ultima carta */
+#ultima:hover,
+#ultimaSobrante:hover {
+	cursor: pointer;
+	border: 1px solid purple;
+	border-radius: 15%;
+	/* para q haga la foto grande al ponernos encima*/
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
+
+}
+
+/* Estilo para los tapetes receptores cuando se pasa el ratón por encima */
+div.tapete:hover {
+	background-color: lightpink;
 }
