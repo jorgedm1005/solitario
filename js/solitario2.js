@@ -185,7 +185,6 @@ function cargar_tapete_inicial(cartas) {
     carta.setAttribute("ondragstart", "dragStart(event)")
     tapete_inicial.appendChild(carta);
     paso += 5;
-    console.log(carta);
     if (i + 1 == cartas.length) {
       carta.setAttribute('draggable', 'true')
     } else {
@@ -261,7 +260,6 @@ function actualizar_inicial() {
     }
 
   }
-  console.log(cartas)
 } // actualizar_baraja
 
 function actualizar_sobrante() {
@@ -278,7 +276,6 @@ function actualizar_sobrante() {
     }
 
   }
-  console.log(cartas)
 } // actualizar_baraja
 
 actualizar_inicial();
@@ -297,9 +294,6 @@ function dragStart(event) {
   }
 }
 
-//let p = ["ova", "cua", "hex", "cir"];
-
-console.log(mazo_inicial[mazo_inicial.length - 1]);
 
 function allowDrop(event) {
 
@@ -392,8 +386,6 @@ function allowDrop(event) {
   actualizar_inicial();
   actualizar_sobrante();
 
-  console.log(mazo_inicial[mazo_inicial.length - 1].split("-")[0]);
-
   function cartaroja(mazo) { //hacemos una funcion para que si la carta es roja devuelva true y si no false
     if (mazo[mazo.length - 1].split("-")[1] == "ova" || mazo[mazo.length - 1].split("-")[1] == "cua") {
       return true;
@@ -405,20 +397,15 @@ function allowDrop(event) {
 }
 
 
-var auxZIndex = 0; //variable para el 
-
 function drop(event) {
   event.preventDefault();
 
   var data = event.dataTransfer.getData("text");
 
-  if (event.target.id == "receptor1" && tap && mazo_inicial.length > 0) { //conreolo el tapete y si viene del inicial
+  if (event.target.id == "receptor1" && tap && mazo_inicial.length > 0) { //controlo el tapete y si viene del inicial
 
-    mazo_receptor1.push(mazo_inicial[mazo_inicial.length - 1]);
-    mazo_inicial.pop();
-
-    document.getElementById(data).style.zIndex = auxZIndex; //ponemos el zindex a cada carta
-    auxZIndex += 1; //aumentamos el zindex para que la siguiente carta sea mas alta
+    mazo_receptor1.push(mazo_inicial[mazo_inicial.length - 1]); //añado la carta al tapete 
+    mazo_inicial.pop(); //quito la carta del inicial
 
     tapete_receptor1.appendChild(document.getElementById(data));
     tapete_receptor1.lastChild.style.top = "20%";
@@ -431,9 +418,6 @@ function drop(event) {
     mazo_receptor2.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
-
     tapete_receptor2.appendChild(document.getElementById(data));
     tapete_receptor2.lastChild.style.top = "20%";
     tapete_receptor2.lastChild.style.left = "20%";
@@ -445,8 +429,6 @@ function drop(event) {
     mazo_receptor3.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor3.appendChild(document.getElementById(data));
     tapete_receptor3.lastChild.style.top = "20%";
@@ -459,8 +441,6 @@ function drop(event) {
     mazo_receptor4.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor4.appendChild(document.getElementById(data));
     tapete_receptor4.lastChild.style.top = "20%";
@@ -473,8 +453,6 @@ function drop(event) {
     mazo_sobrantes.push(mazo_inicial[mazo_inicial.length - 1]);
     mazo_inicial.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_sobrantes.appendChild(document.getElementById(data));
     tapete_sobrantes.lastChild.style.top = "20%";
@@ -485,16 +463,13 @@ function drop(event) {
     inc_contador(cont_movimientos);
     actualizar_contadores();
 
-  } else if (event.target.id == "receptor1" && !tap && mazo_sobrantes.length) {  //conreolo el tapete y si viene del sobrantes
+  } else if (event.target.id == "receptor1" && !tap && mazo_sobrantes.length) {  //controlo el tapete y si viene del sobrantes
     actualizar_sobrante();
     mazo_receptor1.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor1.appendChild(document.getElementById(data));
-    console.log(data);
     tapete_receptor1.lastChild.style.top = "20%";
     tapete_receptor1.lastChild.style.left = "20%";
     actualizar_sobrante();
@@ -505,8 +480,6 @@ function drop(event) {
     mazo_receptor2.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor2.appendChild(document.getElementById(data));
     tapete_receptor2.lastChild.style.top = "20%";
@@ -519,8 +492,6 @@ function drop(event) {
     mazo_receptor3.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor3.appendChild(document.getElementById(data));
     tapete_receptor3.lastChild.style.top = "20%";
@@ -533,8 +504,6 @@ function drop(event) {
     mazo_receptor4.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
     mazo_sobrantes.pop();
 
-    document.getElementById(data).style.zIndex = auxZIndex;
-    auxZIndex += 1;
 
     tapete_receptor4.appendChild(document.getElementById(data));
     tapete_receptor4.lastChild.style.top = "20%";
@@ -545,7 +514,7 @@ function drop(event) {
 
   }
 
-  vaciar_sobrantes(tapete_sobrantes)
+  vaciar_sobrantes(tapete_sobrantes);
 
 
   function vaciar_sobrantes(tapete_sobrantes) {
@@ -573,7 +542,7 @@ function drop(event) {
     }
   }
 
-  function actualizar_contadores() {
+  function actualizar_contadores() { // Actualiza los contadores de cartas en cada tapete.
     cont_inicial.innerHTML = mazo_inicial.length;
     cont_sobrantes.innerHTML = mazo_sobrantes.length;
     cont_receptor1.innerHTML = mazo_receptor1.length;
@@ -584,13 +553,13 @@ function drop(event) {
   }
   comprobarfinjuegocorto(); //comprueba si se ha ganado el juego en el modo corto
   //comprobarfinjuegolargo(); comprueba si se ha ganado el juego en el modo largo, descomentar si se quiere jugar en modo largo
-  sonido();
+  sonido(); // reproduce el sonido cada vez q se mueve una carta
 }
 
 function comprobarfinjuegocorto() {
   if (mazo_inicial.length == 0 && mazo_sobrantes.length == 0 && mazo_receptor1.length == 4 && mazo_receptor2.length == 4 && mazo_receptor3.length == 4 && mazo_receptor4.length == 4) {
     setTimeout(function () {
-      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos");
+      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos y has tardado " + cont_tiempo.innerHTML);
       comenzar_juego();
     }, 100);
   }
@@ -600,7 +569,7 @@ function comprobarfinjuegocorto() {
 function comprobarfinjuegolargo() {
   if (mazo_inicial.length == 0 && mazo_sobrantes.length == 0 && mazo_receptor1.length == 12 && mazo_receptor2.length == 12 && mazo_receptor3.length == 12 && mazo_receptor4.length == 12) {
     setTimeout(function () {
-      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos");
+      alert("Has ganado en " + cont_movimientos.innerHTML + " movimientos y has tardado " + cont_tiempo.innerHTML);
       comenzar_juego();
     }, 100);
   }
