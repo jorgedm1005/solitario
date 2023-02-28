@@ -484,6 +484,7 @@ function drop(event) {
     actualizar_sobrante();
     inc_contador(cont_movimientos);
     actualizar_contadores();
+
   } else if (event.target.id == "receptor1" && !tap && mazo_sobrantes.length) {  //conreolo el tapete y si viene del sobrantes
     actualizar_sobrante();
     mazo_receptor1.push(mazo_sobrantes[mazo_sobrantes.length - 1]);
@@ -583,6 +584,7 @@ function drop(event) {
   }
   comprobarfinjuegocorto(); //comprueba si se ha ganado el juego en el modo corto
   //comprobarfinjuegolargo(); comprueba si se ha ganado el juego en el modo largo, descomentar si se quiere jugar en modo largo
+  sonido();
 }
 
 function comprobarfinjuegocorto() {
@@ -603,4 +605,13 @@ function comprobarfinjuegolargo() {
     }, 100);
   }
 
+}
+
+function sonido() {
+  var sonido = new Audio("../burbuja.mp3");
+  sonido.play();
+  sonido.onended = function () {
+    sonido.pause();
+    sonido.currentTime = 0;
+  };
 }
